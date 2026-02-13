@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aybuke</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,serif;}
+
+body{
+background:black;
+color:white;
+overflow:hidden;
+height:100vh;
+}
+
+/* SCREEN */
+
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:30px;
+}
+
+.hidden{display:none;}
+
+button{
+padding:14px 30px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,crimson,darkred);
+color:white;
+cursor:pointer;
+}
+
+/* LETTERBOX */
+
+.letterbox::before,
+.letterbox::after{
+content:"";
+position:absolute;
+width:100%;
+height:14%;
+background:black;
+left:0;
+z-index:10;
+}
+
+.letterbox::before{top:0;}
+.letterbox::after{bottom:0;}
+
+/* SLIDES */
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+transform:scale(1);
+transition:opacity 2s, transform 8s;
+}
+
+.slide.active{
+opacity:1;
+transform:scale(1.08);
+}
+
+/* FILM GRAIN */
+
+.grain{
+pointer-events:none;
+position:absolute;
+width:100%;
+height:100%;
+background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+opacity:0.15;
+z-index:20;
+}
+
+/* DUST PARTICLES */
+
+.particle{
+position:absolute;
+width:4px;
+height:4px;
+background:white;
+opacity:0.2;
+border-radius:50%;
+animation:float 20s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+
+/* FINAL TEXT SCROLL */
+
+#finalText{
+position:absolute;
+bottom:-200%;
+width:100%;
+padding:0 40px;
+font-size:22px;
+line-height:2;
+text-align:center;
+animation:scrollUp 40s linear forwards;
+}
+
+@keyframes scrollUp{
+from{bottom:-200%;}
+to{bottom:30%;}
+}
+
+/* LAST LINE */
+
+#lastLine{
+position:absolute;
+opacity:0;
+font-size:26px;
+animation:lastFade 4s forwards;
+animation-delay:42s;
+}
+
+@keyframes lastFade{
+to{opacity:1;}
+}
+
+.fadeOut{animation:fadeOut 2s forwards;}
+@keyframes fadeOut{to{opacity:0;}}
+
+</style>
+</head>
+<body>
+
+<div id="intro" class="screen">
+<button id="startBtn">Fragmanı Başlat</button>
+</div>
+
+<div id="gallery" class="screen hidden letterbox">
+
+<div class="slide" style="background-image:url('img1.jpeg')"></div>
+<div class="slide" style="background-image:url('img2.jpeg')"></div>
+<div class="slide" style="background-image:url('img3.jpeg')"></div>
+<div class="slide" style="background-image:url('img4.jpeg')"></div>
+<div class="slide" style="background-image:url('img5.jpeg')"></div>
+<div class="slide" style="background-image:url('img6.jpeg')"></div>
+<div class="slide" style="background-image:url('img7.jpeg')"></div>
+<div class="slide" style="background-image:url('img8.jpeg')"></div>
+<div class="slide" style="background-image:url('img9.jpeg')"></div>
+<div class="slide" style="background-image:url('img10.jpeg')"></div>
+<div class="slide" style="background-image:url('img11.jpeg')"></div>
+<div class="slide" style="background-image:url('img12.jpeg')"></div>
+<div class="slide" style="background-image:url('img13.jpeg')"></div>
+<div class="slide" style="background-image:url('img14.jpeg')"></div>
+<div class="slide" style="background-image:url('img15.jpeg')"></div>
+<div class="slide" style="background-image:url('img16.jpeg')"></div>
+<div class="slide" style="background-image:url('img17.jpeg')"></div>
+<div class="slide" style="background-image:url('img18.jpeg')"></div>
+<div class="slide" style="background-image:url('img19.jpeg')"></div>
+<div class="slide" style="background-image:url('img20.jpeg')"></div>
+<div class="grain"></div>
+
+</div>
+
+<div id="final" class="screen hidden">
+<div id="finalText">
+
+2018 Kasım’da bir çarpışma ile başladı her şey.
+
+Belki sıradan bir gündü.
+Belki herkes için normaldi.
+Ama benim için bir başlangıçtı.
+
+Bir bakış…
+Bir tebessüm…
+Ve anlam veremediğim bir huzur.
+
+Zaman geçti.
+
+Günler ay oldu.
+Aylar yıllara karıştı.
+
+Ama bazı hisler değişmedi.
+
+Yanında kendim gibi olabilmek…
+Sessizken bile anlaşılmak…
+Birlikte gülerken zamanın yavaşladığını hissetmek…
+
+Bu sadece bir fragman değil.
+
+Bu, birlikte yazdığımız bir hikayenin
+küçük bir özeti.
+
+Belki sana pahalı bir hediye veremedim.
+Ama sana zaman verdim.
+Emek verdim.
+Düşüncelerimi verdim.
+
+Ve kalbimin en gerçek yerini verdim.
+
+Sen hayatıma girdiğinden beri
+her şey biraz daha anlamlı.
+
+Ve ben…
+
+Bu hikayenin
+son sahnesini değil,
+
+devamını
+
+seninle yazmak istiyorum.
+
+</div>
+
+<div id="lastLine">
+Bir ömür… seninle.
+</div>
+
+</div>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+
+const startBtn=document.getElementById("startBtn");
+const intro=document.getElementById("intro");
+const gallery=document.getElementById("gallery");
+const final=document.getElementById("final");
+const music=document.getElementById("bgMusic");
+
+startBtn.onclick=function(){
+
+intro.classList.add("hidden");
+gallery.classList.remove("hidden");
+music.play().catch(()=>{});
+
+let slides=document.querySelectorAll(".slide");
+let i=0;
+slides[i].classList.add("active");
+
+let interval=setInterval(()=>{
+slides[i].classList.remove("active");
+i++;
+if(i>=slides.length){
+clearInterval(interval);
+gallery.classList.add("fadeOut");
+setTimeout(()=>{
+gallery.classList.add("hidden");
+final.classList.remove("hidden");
+if(navigator.vibrate){
+navigator.vibrate([300,150,300]);
+}
+},2000);
+}else{
+slides[i].classList.add("active");
+}
+},5000);
+
+}
+
+/* PARTICLES */
+
+for(let i=0;i<25;i++){
+let p=document.createElement("div");
+p.classList.add("particle");
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(15+Math.random()*20)+"s";
+document.body.appendChild(p);
+}
+
+</script>
+
+</body>
+</html>
